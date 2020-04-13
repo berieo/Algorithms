@@ -22,7 +22,7 @@ def kth_of_array(array1, array2, m, n, k):
         else:
             temp = m - mid1 + n - mid2 + 1
             flag = 2
-
+        print(temp)
         # 如果此时序列等于k，则返回最后一次调整的值
         if temp == k:
             if flag == 1:
@@ -33,16 +33,38 @@ def kth_of_array(array1, array2, m, n, k):
         # 如果此时序列大于k，对最后一次没有调整的序列二分
         elif temp > k:
             if flag == 1:
-                mid2 = int((m - mid2) / 2 + mid2)
+                if n - mid2 == 1:
+                    mid2 += 1
+                elif n == mid2:
+                    if m - mid1 == 1:
+                        mid1 += 1
+                    else:
+                        mid1 = int((n - mid1) / 2 + mid1)
+                else:
+                    mid2 = int((m - mid2) / 2 + mid2)
             elif flag == 2:
-                mid1 = int((m - mid1) / 2 + mid1)
+                if m - mid1 == 1:
+                    mid1 += 1
+                elif m == mid1:
+                    if n - mid2 == 1:
+                        mid2 += 1
+                    else:
+                        mid2 = int((m - mid2) / 2 + mid2)
+                else:
+                    mid1 = int((n - mid1) / 2 + mid1)
 
         # 如果此时序列小于k，对最后一次调整的序列二分
         elif temp < k:
             if flag == 1:
-                mid1 = int(mid1 - mid1 / 2)
+                if m == 1:
+                    n -= 1
+                else:
+                    mid1 = int(mid1 - mid1 / 2)
             elif flag == 2:
-                mid2 = int(mid2 - mid2 / 2)
+                if n == 1:
+                    m -= 1
+                else:
+                    mid2 = int(mid2 - mid2 / 2)
 
 
 ans = kth_of_array(array1, array2, m - 1, n - 1, k)
